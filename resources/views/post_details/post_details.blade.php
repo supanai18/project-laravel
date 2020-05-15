@@ -7,7 +7,7 @@
 @section('content')
 <div class="flex-row">
   <h6 class="m-0">
-    <a class="text-inactive" href="{{ url('/') }}">หน้าแรก</a>
+    <a class="text-inactive" href="{{ url('/training') }}">อบรม-สัมมนา</a>
   </h6>
   <p class="slash"><i class="fas fa-caret-right"></i></p>
   <h6 class="m-0 font-weight-bold text-active">หัวข้ออบรม</h6>
@@ -32,8 +32,61 @@
     <div>
       <img src="{{ asset('upload/post/'.$data->post_image) }}" width="100%" />
       <br />
+      <br />
       <span style="font-weight: bolder;">รายละเอียด:</span>
       <p style="text-align: justify; text-justify: inter-word;">{{ $data->post_description }}</p>
+      <br />
+      <span style="font-weight: bolder;">จัดโดย:</span>
+      <p style="text-align: justify; text-justify: inter-word;">{{ $data->post_creator }}</p>
+      <br />
+      <span style="font-weight: bolder;">สถานที่อบรม:</span>
+      <p style="text-align: justify; text-justify: inter-word;">{{ $data->post_address }}</p>
+      <br />
+      <span style="font-weight: bolder;">จำนวนคงเหลือ:</span>
+      <p style="text-align: justify; text-justify: inter-word;">{{ $data->post_rate }}</p>
+      <br />
+      <span style="font-weight: bolder;">ค่าธรรมเนียม:</span>
+      <p style="text-align: justify; text-justify: inter-word;">{{ $data->post_status }}</p>
+      <br />
+      <span style="font-weight: bolder;">ผู้เข้าชม:</span>
+      <p style="text-align: justify; text-justify: inter-word;">{{ $data->post_view }}</p>
+      <br />
+      <span style="font-weight: bolder;">ผู้โพสต์:</span>
+      <p style="text-align: justify; text-justify: inter-word;">{{ $data->name }}</p>
+    </div>
+    <br />
+    <hr />
+    <p class="font-weight-bold">รายละเอียดการอบรม</p>
+    <span style="font-weight: bolder;">ระยะเวลาในการจัดอบรม:</span>
+    <div>
+      <p>{{ $data->post_date }} วัน</p>
+    </div>
+    <span style="font-weight: bolder;">วัน/เวลาในการอบรม:</span>
+    <div>
+      <p>{{ $data->post_start_date }} {{ $data->post_start_time }} - {{ $data->post_end_date }} {{ $data->post_end_time }}</p>
+    </div>
+    <br />
+    <hr />
+    <p class="font-weight-bold">ข้อมูลส่วนบุคคล</p>
+    <span style="font-weight: bolder;">ชื่อ-สกุล:</span>
+    <div>
+      <p>{{ $data->post_personal }}</p>
+    </div>
+    <span style="font-weight: bolder;">ที่อยู่:</span>
+    <div>
+      <p>{{ $data->post_per_address }}</p>
+    </div>
+    <span style="font-weight: bolder;">เบอร์โทรศัพท์:</span>
+    <div>
+      <p>{{ $data->post_tel }}</p>
+    </div>
+    <span style="font-weight: bolder;">บัตรประชาชน:</span>
+    <div>
+      <img src="{{ asset('upload/card/'.$data->post_id_card) }}" alt="Avatar" width="100%">
+    </div>
+    <span style="font-weight: bolder;">ใบประกอบอาชีพ:</span>
+    <div>
+      <img src="{{ asset('upload/cert/'.$data->post_cert) }}" alt="Avatar" width="100%">
     </div>
     <br />
   </div>
@@ -117,27 +170,7 @@
       </div>
       <span class="text-red" style="font-size: 14px;">หมายเหตุ: กรุณากรอกข้อมูลให้ครบถ้วน เจ้าหน้าที่จะติดต่อกลับหาท่านตามข้อมูลดังกล่าว</span>
       <hr>
-      <div class="card-body">
-        <div>
-          <span><i class="fas fa-user-check text-app"></i> จำนวนคงเหลือ: {{ $data->post_rate }} คนเท่านั้น</span>
-        </div>
-        <br />
-        <div>
-          <span><i class="fas fa-tag text-app"></i> ค่าธรรมเนียม: {{ $data->post_status }}</span>
-        </div>
-        <br />
-        <div>
-          <span><i class="fas fa-users text-app"></i> จัดโดย: {{ $data->post_creator }}</span>
-        </div>
-        <br />
-        <div>
-          <span><i class="fas fa-map-marker-alt text-app"></i> สถานที่อบรม: {{ $data->post_address }}</span>
-        </div>
-        <br />
-        <div>
-          <span><i class="fas fa-heart text-app"></i> ผู้เข้าชม: {{ $data->post_view }} ครั้ง</span>
-        </div>
-        <br />
+      <div class="d-flex justify-content-around card-body">
         <div>
           <a href="{{ url('/confirm-like-post/'.$data->id) }}">
             <span><i class="fas fa-thumbs-up text-app"></i> ถูกใจ: {{ $data->post_like }}</span>
@@ -155,7 +188,6 @@
             <span><i class="fas fa-bookmark text-app"></i> บันทึกเก็บ</span>
           </a>
         </div>
-        <br />
       </div>
     </div>
     <br/>
@@ -174,7 +206,7 @@
           @else
           <tr class="d-flex justify-content-between">
             <td>
-              <img src="{{ $item->avatar }}" width="40px" class="rounded-circle" />
+              <img src="{{ $item->avatar }}" width="40px" height="40px" class="rounded-circle" />
               <span class="font-weight-bold">{{ $item->name }} : </span>
               <span>{{ $item->comment }}</span>
             </td>

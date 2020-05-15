@@ -15,23 +15,19 @@
   </div>
   <div class="card-body">
     <div class="button-right">
-      <a class="btn button-action" href="{{ url('/') }}"><i class="fas fa-pen"></i></a>
+      <a class="btn button-action" href="{{ url('/form-update-profile/'.Auth::user()->id) }}">แก้ไข</a>
     </div>
     <center>
-      <img src="{{ Auth::user()->avatar }}" width="80px" class="rounded-circle" />
+      <img src="{{ Auth::user()->avatar }}" width="80px" height="80px" class="rounded-circle" />
       <p class="name-profile">{{ Auth::user()->name }}</p>
       <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
           <p class="number-data">{{ $data_post_count }}</p>
           <a href="{{ url('/profile') }}">อบรม-สัมมนา</a>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-4">
           <p class="number-data">{{ $data_news_count }}</p>
           <a href="{{ url('/profile') }}">ข่าวประชาสัมพันธ์</a>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-          <p class="number-data">{{ $data_training_count }}</p>
-          <a href="{{ url('/cart') }}">ที่ต้องชำระ</a>
         </div>
       </div>
     </center>
@@ -45,7 +41,7 @@
   </div>
   <div class="card-body">
     <div class="button-right">
-      <a class="btn button-action" href="{{ url('/form-create-post-auth') }}"><i class="fas fa-plus"></i></a>
+      <a class="btn button-action" href="{{ url('/form-create-post-auth') }}">เพิ่ม</a>
     </div>
     <div class="row">
     @forelse($data_post as $data)
@@ -96,7 +92,7 @@
   </div>
   <div class="card-body">
     <div class="button-right">
-      <a class="btn button-action" href="{{ url('/form-create-news-auth') }}"><i class="fas fa-plus"></i></a>
+      <a class="btn button-action" href="{{ url('/form-create-news-auth') }}">เพิ่ม</a>
     </div>
     <div class="row">
     @forelse($data_news as $data)

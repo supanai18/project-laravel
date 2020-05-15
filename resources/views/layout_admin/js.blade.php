@@ -1,3 +1,9 @@
+<!-- font thaisarabun -->
+<link rel="stylesheet" href="{{ asset('fonts/THSarabunNew.ttf') }}">
+<link rel="stylesheet" href="{{ asset('fonts/THSarabunNew Bold.ttf') }}">
+<link rel="stylesheet" href="{{ asset('fonts/THSarabunNew Italic.ttf') }}">
+<link rel="stylesheet" href="{{ asset('fonts/THSarabunNew BoldItalic.ttf') }}">
+
 <!-- Font -->
 <link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
 

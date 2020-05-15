@@ -9,7 +9,7 @@ class UsersTableSeeder extends Seeder
     public function run(Request $request)
     {
         $request['name'] = 'admin';
-        $request['email'] = 'admin1@training.com';
+        $request['email'] = 'admin@training.com';
         $request['password'] = 'admin123456';
 
         User::create([

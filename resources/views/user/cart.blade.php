@@ -41,7 +41,7 @@
                         <span>สถานะ: {{ $data->training_status }}</span>
                       </div>
                       <hr />
-                      <span class="text-red">ชำระก่อนวันที่ {{ date('d-m-Y', strtotime($data->post_end) )}}</span>
+                      <span class="text-red">ชำระก่อนภายในวันที่ {{ date('d-m-Y', strtotime($data->post_end) )}}</span>
                       <div>
                         <a href="{{ url('/form-create-payment/'.$data->id.'/'.$data->post_title) }}" class="btn btn-app">ชำระเงิน</a>
                       </div>
@@ -81,7 +81,7 @@
                         <span>สถานะ: {{ $data->training_status }}</span>
                       </div>
                       <hr />
-                      <span class="text-red">แก้ไขชำระก่อนวันที่ {{ date('d-m-Y', strtotime($data->post_end) )}}</span>
+                      <span class="text-red">แก้ไขชำระก่อนภายในวันที่ {{ date('d-m-Y', strtotime($data->post_end) )}}</span>
                       <div>
                         <a href="{{ url('/form-update-payment/'.$data->id.'/'.$data->post_title) }}" class="btn btn-app">แก้ไขชำระเงิน</a>
                       </div>

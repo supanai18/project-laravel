@@ -28,6 +28,8 @@ Route::post('/confirm-comment-post/{id}/{title}', 'CommentController@confirm_com
 Route::get('/confirm-delete-comment/{id}', 'CommentController@delete_comment');
 
 // ----------------------------------------- Post Details Free --------------------------------------
+// training
+Route::get('/training', 'HomeController@training');
 // training free
 Route::get('/training-free', 'HomeController@training_free');
 // training details
@@ -54,6 +56,14 @@ Route::get('/cart', 'UserController@cart');
 Route::get('/list', 'UserController@list');
 // post list
 Route::get('/training-details/{id}', 'UserController@training_details');
+// form update profile
+Route::get('/form-update-profile/{id}', 'UserController@form_update_profile');
+Route::post('/confirm-update-profile/{id}', 'UserController@confirm_update_profile');
+// manage payment
+Route::get('/manage-payment', 'UserController@manage_payment');
+Route::get('/confirm-payment/{training_id}', 'UserController@confirm_manage_payment');
+// list user register post
+Route::get('/list-user-register', 'UserController@list_register_user');
 
 // --------------------------------------- User Create Update and Delete Post -----------------------
 // create
@@ -123,4 +133,49 @@ Route::get('/dashboard/confirm-delete-post/{id}', 'AdminController@dashboard_del
 Route::get('/dashboard/confirm-delete-news/{id}', 'AdminController@dashboard_delete_news');
 Route::get('/dashboard/confirm-delete-comments/{id}', 'AdminController@dashboard_delete_comment');
 
+// แสดงผลรายงาน
+Route::get('/dashboard/post-report', 'PDFController@dashboard_post_report');
+Route::get('/dashboard/report-post/{id}', 'PDFController@report_post');
+Route::get('/dashboard/report-post-all', 'PDFController@report_post_all');
 
+Route::get('/dashboard/new-report', 'PDFController@dashboard_news');
+Route::get('/dashboard/report-news/{id}', 'PDFController@report_news');
+Route::get('/dashboard/report-news-all', 'PDFController@report_news_all');
+
+
+
+// clear
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return '<h1>Cache cleared success</h1>';
+});
+
+//Reoptimized class loader:
+Route::get('/optimize', function() {
+    Artisan::call('optimize');
+    return '<h1>Reoptimized class loader</h1>';
+});
+
+//Route cache:
+Route::get('/route-cache', function() {
+    Artisan::call('route:cache');
+    return '<h1>Routes cached</h1>';
+});
+
+//Clear Route cache:
+Route::get('/route-clear', function() {
+    Artisan::call('route:clear');
+    return '<h1>Route cache cleared</h1>';
+});
+
+//Clear View cache:
+Route::get('/view-clear', function() {
+    Artisan::call('view:clear');
+    return '<h1>View cache cleared</h1>';
+});
+
+//Clear Config cache:
+Route::get('/config-cache', function() {
+    Artisan::call('config:cache');
+    return '<h1>Clear Config cleared</h1>';
+});

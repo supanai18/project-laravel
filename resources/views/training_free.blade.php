@@ -1,9 +1,31 @@
 @extends('layout.main')
 @section('title', 'อบรมฟรี-สัมมนาฟรี :')
+
+@section('style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+@endsection
+
 @section('content')
 
-<div class="flex-row">
-  <h6 class="m-0 font-weight-bold text-active">อบรมฟรี-สัมมนาฟรี</h6>
+<div class="d-flex justify-content-between">
+  <h6 class="m-0 font-weight-bold text-active">หน้าแรก</h6>
+  <a href="" class="m-0 font-weight-bold text-active" data-toggle="modal" data-target="#calendar"><i class="fas fa-calendar-alt"></i> ปฎิทินการรับสมัคร</a>
+</div>
+<div class="modal fade" id="calendar" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">ปฎิทินการรับสมัคร</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      {!! $calendar_details->calendar() !!}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-trainning" data-dismiss="modal">ปิด</button>
+      </div>
+    </div>
+  </div>
 </div>
 <br />
 <div class="row">
@@ -37,6 +59,9 @@
         <div class="text-left">
           <span class="text-color-app text-small max-line-one"><i class="fas fa-flag color-app"></i> จัดโดย: {{ $data->post_creator }}</span>
         </div>
+        <div class="text-left">
+          <span class="text-color-app text-small max-line-one"><i class="fas fa-user color-app"></i> ผู้โพสต์: {{ $data->name }}</span>
+        </div>
         <br />
         <div class="row">
           <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-center">
@@ -57,4 +82,10 @@
 {!! $training_free->render() !!}
 </div>
 
+@endsection
+
+@section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $calendar_details->script() !!}
 @endsection

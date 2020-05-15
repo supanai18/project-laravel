@@ -24,8 +24,8 @@
   <div class="card-body">
     @foreach($news_details as $data)
       <div class="button-right">
-        <a class="btn button-action" href="{{ url('/form-update-news-auth/'.$data->id) }}"><i class="fas fa-pen"></i></a>
-        <button class="btn button-action" onclick="if (confirm('ยืนยันลบหรือไม่?')) { return location.href='{{ url('/confirm-delete-news-auth/'.$data->id) }}' };"><i class="fas fa-trash-alt"></i></button>
+        <a class="btn button-action" href="{{ url('/form-update-news-auth/'.$data->id) }}">แก้ไข</a>
+        <button class="btn button-action" onclick="if (confirm('ยืนยันลบหรือไม่?')) { return location.href='{{ url('/confirm-delete-news-auth/'.$data->id) }}' };">ลบ</button>
       </div>
       <center class="layout-image-post">
         <div class="container-post-profile">

@@ -33,7 +33,7 @@ class PaymentController extends Controller
 
     $update_training = Training::where('id', $training_id)->update(['training_status' => 'รอการอนุมัติจากเจ้าหน้าที่']);
 
-    return redirect('/cart')->with('success', 'แจ้งชำระเงินสำเร็จ');
+    return redirect('/cart')->with('success', 'แจ้งชำระเงินสำเร็จ โปรดรอตรวจสอบการชำระเงิน');
   }
 
   public function confirm_update_payment(Request $request, $payment_id) {
@@ -60,6 +60,6 @@ class PaymentController extends Controller
     }
     $confirm_payment->save();
 
-    return redirect('/cart')->with('success', 'แจ้งอัพเดทชำระเงินสำเร็จ');
+    return redirect('/cart')->with('success', 'แจ้งอัพเดทชำระเงินสำเร็จ โปรดรอตรวจสอบการชำระเงิน');
   }
 }

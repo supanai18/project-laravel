@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('post_status');
             $table->integer('post_rate');
             $table->longText('post_description');
+            $table->longText('post_payment');
             $table->string('post_start');
             $table->string('post_end');
             $table->integer('post_view');

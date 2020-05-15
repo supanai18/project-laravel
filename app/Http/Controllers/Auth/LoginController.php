@@ -31,7 +31,7 @@ class LoginController extends Controller
             return redirect('/');
         } else {
             $check_email = User::where('email', $userSocial->email)->get();
-            if(!$check_email) {
+            if($check_email) {
                 $new_user = User::create([
                     'name' => $userSocial->name,
                     'email' => $userSocial->email,

@@ -44,6 +44,12 @@
           <span><i class="fas fa-heart text-app"></i> ผู้เข้าชม: {{ $data->news_view }} ครั้ง</span>
         </div>
         <br />
+        <br />
+        <div>
+          <a href="{{ url('/confirm-unlike-post/'.$data->id) }}">
+            <span><i class="fas fa-user text-app"></i> ผู้โพสต์: {{ $data->name }}</span>
+          </a>
+        </div>
       </div>
     </div>
     <br/>

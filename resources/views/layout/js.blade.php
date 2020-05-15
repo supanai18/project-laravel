@@ -31,10 +31,46 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.js"></script>
 
+@yield('script')
+
 <script>
-    $('#summernote').summernote({
-        placeholder: 'รายละเอียด',
-        tabsize: 2,
-        height: 200
-    });
+    $(document).ready(function(){
+        $("#post_price").hide();
+        $("#post_payment").hide();
+        $("#post_start_date").hide();
+        $("#post_start_time").hide();
+        $("#post_end_date").hide();
+        $("#post_end_time").hide();
+    })
+</script>
+
+<script>
+$("#selected_post").change(function() {
+    var selected = $(this).find("option:selected").val();
+    if(selected == 'ฟรี') {
+        $("#post_price").hide();
+        $("#post_payment").hide();
+    } else {
+        $("#post_price").show();
+        $("#post_payment").show();
+    }
+    
+});
+</script>
+
+<script>
+$("#selected_post_date").change(function() {
+    var selected = $(this).find("option:selected").val();
+    if(selected <= '1') {
+        $("#post_start_date").show();
+        $("#post_start_time").show();
+        $("#post_end_date").hide();
+        $("#post_end_time").show();
+    } else {
+        $("#post_start_date").show();
+        $("#post_start_time").show();
+        $("#post_end_date").show();
+        $("#post_end_time").show();
+    }
+});
 </script>

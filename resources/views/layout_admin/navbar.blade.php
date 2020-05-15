@@ -38,7 +38,7 @@
     @else
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img src="{{ url('upload/icon/profile.png') }}" width="40px" class="rounded-circle" />
+        <img src="{{ url('upload/icon/profile.png') }}" width="40px" height="40px" class="rounded-circle" />
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

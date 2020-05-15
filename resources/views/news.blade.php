@@ -28,6 +28,9 @@
         <div class="text-left">
           <span class="text-color-app text-small max-line-one"><i class="fas fa-flag color-app"></i> จัดโดย: {{ $data->news_creator }}</span>
         </div>
+        <div class="text-left">
+          <span class="text-color-app text-small max-line-one"><i class="fas fa-user color-app"></i> ผู้โพสต์: {{ $data->name }}</span>
+        </div>
         <br />
         <div class="row">
           <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-center">

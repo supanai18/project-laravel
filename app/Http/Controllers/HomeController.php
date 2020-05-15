@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Calendar;
 use DB;
 use App\Post;
 use App\Comments;
@@ -11,26 +12,152 @@ use App\News;
 class HomeController extends Controller
 {
   public function index() {
-    $post = Post::where('post_status', 'เสียค่าธรรมเนียม')->orderBy('created_at', 'desc')->paginate(9);
+    $events = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->orderBy('posts.created_at', 'desc')
+            ->get();
+    $event_list = [];
 
-    return view('home', compact('post'));
+    foreach ($events as $key => $event) {
+      $event_list[] = Calendar::event(
+        $event->post_title,
+        true,
+        new \DateTime($event->post_start_date),
+        new \DateTime($event->post_end_date.' +1 day'),
+        $event->id,
+        [
+          'color' => '#015dd5',
+          'textColor' => '#ffffff',
+        ]
+      );
+    }
+
+    $calendar_details = Calendar::addEvents($event_list)->setCallbacks([
+                                'themeSystem' => '"bootstrap4"',
+                                'eventRender' => 'function(event, element) {
+                                  element.popover({
+                                    animation: true,
+                                    html: true,
+                                    content: $(element).html(),
+                                    trigger: "hover"
+                                    });
+                                  }'
+                                ]);
+    
+    $post = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->orderBy('posts.created_at', 'desc')
+            ->paginate(9);
+
+    return view('home', compact('post', 'calendar_details'));
+    // return response()->json($calendar_details);
+  }
+
+  public function training() {
+    $events = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->where('posts.post_status', 'เสียค่าธรรมเนียม')
+            ->whereNotIn('post_rate', [0])
+            ->orderBy('posts.created_at', 'desc')
+            ->get();
+    $event_list = [];
+
+    foreach ($events as $key => $event) {
+      $event_list[] = Calendar::event(
+        $event->post_title,
+        true,
+        new \DateTime($event->post_start),
+        new \DateTime($event->post_end.' +1 day'),
+        $event->id,
+        [
+          'color' => '#015dd5',
+          'url' => url("/post/".$event->id."/".$event->post_title),
+          'textColor' => '#ffffff',
+        ]
+      );
+    }
+
+    $calendar_details = Calendar::addEvents($event_list)->setCallbacks([
+                                'themeSystem' => '"bootstrap4"',
+                                'eventRender' => 'function(event, element) {
+                                  element.popover({
+                                    animation: true,
+                                    html: true,
+                                    content: $(element).html(),
+                                    trigger: "hover"
+                                    });
+                                  }'
+                                ]);
+    
+    $post = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->where('posts.post_status', 'เสียค่าธรรมเนียม')
+            ->whereNotIn('post_rate', [0])
+            ->orderBy('posts.created_at', 'desc')
+            ->paginate(9);
+
+    return view('training', compact('post', 'calendar_details'));
   }
 
   public function training_free() {
-    $training_free = Post::where('post_status', 'ฟรี')->orderBy('created_at', 'desc')->paginate(9);
+    $events = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->where('posts.post_status', 'ฟรี')
+            ->whereNotIn('post_rate', [0])
+            ->orderBy('posts.created_at', 'desc')
+            ->get();
+    $event_list = [];
 
-    return view('training_free', compact('training_free'));
+    foreach ($events as $key => $event) {
+      $event_list[] = Calendar::event(
+        $event->post_title,
+        true,
+        new \DateTime($event->post_start),
+        new \DateTime($event->post_end.' +1 day'),
+        $event->id,
+        [
+          'color' => '#015dd5',
+          'url' => url("/training/".$event->id."/".$event->post_title),
+          'textColor' => '#ffffff',
+        ]
+      );
+    }
+
+    $calendar_details = Calendar::addEvents($event_list)->setCallbacks([
+                                'themeSystem' => '"bootstrap4"',
+                                'eventRender' => 'function(event, element) {
+                                  element.popover({
+                                    animation: true,
+                                    html: true,
+                                    content: $(element).html(),
+                                    trigger: "hover"
+                                    });
+                                  }'
+                                ]);
+
+    $training_free = DB::table('users')
+                    ->join('posts', 'users.id', '=', 'posts.user_id')
+                    ->where('posts.post_status', 'ฟรี')
+                    ->whereNotIn('post_rate', [0])
+                    ->orderBy('posts.created_at', 'desc')
+                    ->paginate(9);
+
+    return view('training_free', compact('training_free', 'calendar_details'));
   }
 
   // training details post #id
   public function training_details($id) {
     $update_view = Post::where('id', $id)->update(['post_view' => DB::raw('post_view+1')]);
 
-    $details_post = Post::where('id', $id)->where('post_status', 'ฟรี')->get();
+    $details_post = DB::table('users')
+                    ->join('posts', 'users.id', '=', 'posts.user_id')
+                    ->where('posts.id', $id)
+                    ->where('posts.post_status', 'ฟรี')
+                    ->get();
 
-    $comments = DB::table('posts')
-              ->join('users', 'posts.user_id', '=', 'users.id')
-              ->join('comments', 'posts.id', '=', 'comments.post_id')
+    $comments = DB::table('comments')
+              ->join('posts', 'comments.post_id', '=', 'posts.id')
+              ->join('users', 'comments.user_id', '=', 'users.id')
               ->where('post_id', $id)
               ->get();
 
@@ -38,7 +165,10 @@ class HomeController extends Controller
   }
 
   public function news() {
-    $news = News::orderBy('created_at', 'desc')->paginate(9);
+    $news = DB::table('users')
+            ->join('news', 'users.id', '=', 'news.user_id')
+            ->orderBy('news.created_at', 'desc')
+            ->paginate(9);
 
     return view('news', compact('news'));
   }
@@ -46,7 +176,10 @@ class HomeController extends Controller
   public function news_details($id) {
     $update_news = News::where('id', $id)->update(['news_view' => DB::raw('news_view+1')]);
 
-    $news_details = News::where('id', $id)->get();
+    $news_details = DB::table('users')
+                    ->join('news', 'users.id', '=', 'news.user_id')
+                    ->where('news.id', $id)
+                    ->get();
 
     return view('news_details.news_details', compact('news_details'));
   }
@@ -55,11 +188,16 @@ class HomeController extends Controller
   public function details_post($id) {
     $update_view = Post::where('id', $id)->update(['post_view' => DB::raw('post_view+1')]);
 
-    $details_post = Post::where('id', $id)->where('post_status', 'เสียค่าธรรมเนียม')->get();
+    $details_post = DB::table('users')
+              ->join('posts', 'users.id', '=', 'posts.user_id')
+              ->where('posts.post_status', 'เสียค่าธรรมเนียม')
+              ->where('posts.id', $id)
+              ->get();
 
-    $comments = DB::table('posts')
-              ->join('users', 'posts.user_id', '=', 'users.id')
-              ->join('comments', 'posts.id', '=', 'comments.post_id')
+    $comments = DB::table('comments')
+              ->join('posts', 'comments.post_id', '=', 'posts.id')
+              ->join('users', 'comments.user_id', '=', 'users.id')
+              ->select('*', 'comments.id', 'posts.id as post_id', 'users.id as user_id')
               ->where('post_id', $id)
               ->get();
 

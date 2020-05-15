@@ -24,7 +24,7 @@
             </div>
             <br />
             <div>
-              <span>ค่าธรรมเนียม: {{ $data->post_price }} บาท</span>
+              <span>รายละเอียด: {{ $data->post_description }}</span>
             </div>
           </div>
         </div>
@@ -46,7 +46,8 @@
           <div class="card-body">
             <span class="font-weight-bold">ช่องทางการชำระเงิน</span>
             <br />
-            <div class="row">
+            <textarea class="form-control payment" rows="6" disabled>{{ $data->post_payment }}</textarea>
+            <!-- <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-12 col-12 layout-app">
                 <img src="{{ asset('upload/image/ktb.jpg') }}" width="100%" />
               </div>
@@ -68,7 +69,7 @@
                   <span>0000-0000-0000-0000</span>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
